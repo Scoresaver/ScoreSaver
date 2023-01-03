@@ -3,8 +3,6 @@ package com.example.scoresaver.presentation.ui.widget
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,9 +22,14 @@ import androidx.wear.compose.material.Text
 fun ButtonCustom(
     text: String,
     borderColor: Color = Color.White,
+    backgroundColor: Color? = null,
     tintColor: Color = Color.White,
     imageVector: ImageVector? = null,
-    onClickButton: (() -> Unit?)? = null
+    onClickButton: (() -> Unit?)? = null,
+    height: Int = 33,
+    positionText: TextAlign = TextAlign.Left,
+    textColor: Color = Color.White,
+    sizeIcon: Int = 20
 ) {
     Column(
         modifier = Modifier
@@ -40,32 +43,39 @@ fun ButtonCustom(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(33.dp)
+                .height(height.dp)
                 .padding(horizontal = 10.dp),
             shape = RoundedCornerShape(5.dp),
             border = ButtonDefaults.outlinedButtonBorder(borderColor = borderColor)
         ) {
-            Box(contentAlignment = Alignment.CenterEnd)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(backgroundColor ?: Color.Black),
+                contentAlignment = Alignment.CenterEnd
+            )
             {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     text = text,
-                    color = Color.White,
-                    textAlign = TextAlign.Left,
+                    color = textColor,
+                    textAlign = positionText,
                     style = TextStyle(
                         fontSize = 12.sp
                     )
                 )
-                Icon(
-                    imageVector = imageVector ?: Icons.Rounded.Add,
-                    modifier = Modifier
-                        .padding(end = 10.dp)
-                        .size(20.dp),
-                    tint = tintColor,
-                    contentDescription = "icon button"
-                )
+                imageVector?.let {
+                    Icon(
+                        imageVector = imageVector,
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .size(sizeIcon.dp),
+                        tint = tintColor,
+                        contentDescription = "icon button"
+                    )
+                }
             }
         }
     }

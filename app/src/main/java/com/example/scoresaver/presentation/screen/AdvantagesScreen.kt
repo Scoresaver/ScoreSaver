@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.wear.compose.material.Text
 
 @Composable
-fun HistoryScreen() {
+fun AdvantagesScreen() {
     Text(
         modifier = Modifier.fillMaxWidth(),
-        text = "History Screen"
+        text = "Advantages Screen"
     )
 }

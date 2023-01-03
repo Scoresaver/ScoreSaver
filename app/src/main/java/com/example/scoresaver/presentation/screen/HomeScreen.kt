@@ -22,7 +22,9 @@ fun HomeScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ButtonCustom(text = stringResource(id = R.string.new_game),
+        ButtonCustom(
+            text = stringResource(id = R.string.new_game),
+            imageVector = Icons.Rounded.Add,
             onClickButton = {
             navController.navigate(Screen.Menu.route)
         })

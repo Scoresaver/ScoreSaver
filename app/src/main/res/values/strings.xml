@@ -6,4 +6,8 @@
     -->
     <string name="new_game">Nuova partita</string>
     <string name="history_game">Storico</string>
+    <string name="type_game">Tipo di gioco</string>
+    <string name="order_service">Ordine di servizio</string>
+    <string name="advantages">Vantaggi</string>
+    <string name="next">Avanti</string>
 </resources>
