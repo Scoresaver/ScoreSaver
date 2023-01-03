@@ -6,6 +6,7 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import com.example.scoresaver.presentation.screen.HomeScreen
 import com.example.scoresaver.presentation.screen.SplashScreen
+import com.example.scoresaver.presentation.util.EnterAnimation
 
 
 @Composable
@@ -18,7 +19,9 @@ fun SetupNavGraph(navController: NavHostController) {
             SplashScreen(navController = navController)
         }
         composable(Screen.Home.route) {
-            HomeScreen()
+            EnterAnimation {
+                HomeScreen()
+            }
         }
     }
 }
