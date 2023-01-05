@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +29,7 @@ fun MenuScreen(
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Icon(
-            imageVector = Icons.Rounded.ArrowBackIos,
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_back),
             modifier = Modifier
                 .padding(start = 16.dp, top = 18.dp)
                 .clickable {
@@ -37,7 +39,7 @@ fun MenuScreen(
             tint = Orange
         )
         Text(
-            modifier = Modifier.padding(start = 5.dp, top = 20.dp),
+            modifier = Modifier.padding(start = 7.dp, top = 17.dp),
             text = stringResource(id = R.string.new_game),
             color = Orange,
             fontSize = 12.sp
@@ -55,7 +57,7 @@ fun MenuScreen(
             height = 27,
             backgroundColor = BackgroundGrey,
             borderColor = BackgroundGrey,
-            imageVector = Icons.Rounded.ArrowForwardIos,
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_next),
             sizeIcon = 12,
             onClickButton = {
                 navController.navigate(Screen.TypeGame.route)
@@ -67,7 +69,7 @@ fun MenuScreen(
             height = 27,
             backgroundColor = BackgroundGrey,
             borderColor = BackgroundGrey,
-            imageVector = Icons.Rounded.ArrowForwardIos,
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_next),
             sizeIcon = 12,
             onClickButton = {
                 navController.navigate(Screen.OrderService.route)
@@ -79,7 +81,7 @@ fun MenuScreen(
             height = 27,
             backgroundColor = BackgroundGrey,
             borderColor = BackgroundGrey,
-            imageVector = Icons.Rounded.ArrowForwardIos,
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_next),
             sizeIcon = 12,
             onClickButton = {
                 navController.navigate(Screen.Advantages.route)

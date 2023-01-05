@@ -10,6 +10,9 @@ val Teal200 = Color(0xFF03DAC5)
 val Red400 = Color(0xFFCF6679)
 val BackgroundGrey = Color(0xFF202020)
 val Orange = Color(0xFFFF8800)
+val BackgroundOrange = Color(0xFF7D4300)
+val Light = Color(0xFFF3E9D2)
+val BackgroundLight = Color(0XFFB6AD9A)
 
 internal val wearColorPalette: Colors = Colors(
     primary = Purple200,
