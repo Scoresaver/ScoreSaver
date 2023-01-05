@@ -31,10 +31,6 @@ fun ButtonCustom(
     textColor: Color = Color.White,
     sizeIcon: Int = 20
 ) {
-    Column(
-        modifier = Modifier
-            .background(Color.Black)
-    ) {
         OutlinedButton(
             onClick = {
                 if (onClickButton != null) {
@@ -78,7 +74,6 @@ fun ButtonCustom(
                 }
             }
         }
-    }
 }
 
 @Preview
