@@ -1,8 +1,6 @@
 package com.example.scoresaver.presentation.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,14 +30,20 @@ fun HomeScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            modifier = Modifier.padding(bottom = 30.dp),
+            modifier = Modifier.padding(bottom = 10.dp),
             text = stringResource(id = R.string.title),
             color = Orange,
             fontSize = 20.sp,
             fontFamily = FontFamily(Font(R.font.quanticoregular))
         )
 
+        val iconModifier = Modifier
+            .size(24.dp)
+            .padding(end = 10.dp)
+            .wrapContentSize(align = Alignment.Center)
+
         ButtonCustom(
+            iconModifier = iconModifier,
             text = stringResource(id = R.string.new_game),
             imageVector = ImageVector.vectorResource(id = R.drawable.icon_add),
             onClickButton = {
@@ -52,6 +56,7 @@ fun HomeScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.padding(top = 10.dp))
         ButtonCustom(
+            iconModifier = iconModifier,
             text = stringResource(id = R.string.history_game),
             imageVector = ImageVector.vectorResource(id = R.drawable.icon_undo),
             onClickButton = {

@@ -23,6 +23,10 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
+        <meta-data
+            android:name="android.service.wallpaper.square_mode"
+            android:value="false" />
+
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
