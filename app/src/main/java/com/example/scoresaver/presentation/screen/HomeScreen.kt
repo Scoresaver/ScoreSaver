@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -24,19 +25,26 @@ import com.example.scoresaver.presentation.ui.widget.ButtonCustom
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+
+    Row(modifier = Modifier
+        .fillMaxWidth().padding(top = 18.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
         Text(
             modifier = Modifier.padding(bottom = 10.dp),
             text = stringResource(id = R.string.title),
             color = Orange,
             fontSize = 20.sp,
-            fontFamily = FontFamily(Font(R.font.quanticoregular))
+            fontFamily = FontFamily(Font(R.font.quanticoregular)),
+            textAlign = TextAlign.Center
         )
+    }
 
+    Column(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         val iconModifier = Modifier
             .size(24.dp)
             .padding(end = 10.dp)
@@ -54,7 +62,7 @@ fun HomeScreen(navController: NavHostController) {
             textColor = Color.Black,
             tintColor = Color.Black
         )
-        Spacer(modifier = Modifier.padding(top = 10.dp))
+        Spacer(modifier = Modifier.padding(top = 8.dp))
         ButtonCustom(
             iconModifier = iconModifier,
             text = stringResource(id = R.string.history_game),
