@@ -19,7 +19,7 @@ import androidx.wear.compose.material.Text
 
 @Composable
 fun ButtonCustom(
-    iconModifier: Modifier? = null,
+    iconModifier: Modifier? = Modifier,
     text: String,
     borderColor: Color = Color.White,
     backgroundColor: Color? = null,
@@ -28,6 +28,8 @@ fun ButtonCustom(
     onClickButton: (() -> Unit?)? = null,
     positionText: TextAlign = TextAlign.Left,
     textColor: Color = Color.White,
+    roundedShape: Int? = null,
+    iconChecked: ImageVector? = null
 ) {
     OutlinedButton(
         onClick = {
@@ -39,7 +41,7 @@ fun ButtonCustom(
             .fillMaxWidth()
             .height(33.dp)
             .padding(horizontal = 10.dp),
-        shape = RoundedCornerShape(15.dp),
+        shape = if(roundedShape == null) RoundedCornerShape(15.dp) else RoundedCornerShape(roundedShape.dp),
         border = ButtonDefaults.outlinedButtonBorder(borderColor = borderColor)
     ) {
         Box(
@@ -49,10 +51,21 @@ fun ButtonCustom(
             contentAlignment = Alignment.CenterEnd
         )
         {
+            iconChecked?.let {
+                Icon(
+                    imageVector = it,
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .size(12.dp)
+                        .align(Alignment.CenterStart),
+                    tint = tintColor,
+                    contentDescription = "icon button"
+                )
+            }
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = if(iconChecked == null) 16.dp else 25.dp),
                 text = text,
                 color = textColor,
                 textAlign = positionText,
@@ -68,7 +81,6 @@ fun ButtonCustom(
                         tint = tintColor,
                         contentDescription = "icon button"
                     )
-
                 }
             }
         }

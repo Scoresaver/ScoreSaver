@@ -13,11 +13,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.wear.compose.material.Icon
 import com.example.scoresaver.presentation.navigation.Screen
+import com.example.scoresaver.presentation.util.SETTINGS_TYPE
+import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,6 +44,22 @@ fun SplashScreen(
         navController.navigate(Screen.Home.route)
 
     }
+    WidgetSharedPrefsUtil.deletePref(
+        LocalContext.current,
+        settingsType = SETTINGS_TYPE.TYPE_GAME.value
+    )
+    WidgetSharedPrefsUtil.deletePref(
+        LocalContext.current,
+        settingsType = SETTINGS_TYPE.TYPE_ADVANTAGES.value
+    )
+    WidgetSharedPrefsUtil.deletePref(
+        LocalContext.current,
+        settingsType = SETTINGS_TYPE.ORDER_SERVICE.value
+    )
+    WidgetSharedPrefsUtil.deletePref(
+        LocalContext.current,
+        settingsType = SETTINGS_TYPE.ORDER_SERVICE.value
+    )
     Splash(alpha = alphaAnimation.value)
 }
 

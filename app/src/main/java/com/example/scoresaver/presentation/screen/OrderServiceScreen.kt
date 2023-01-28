@@ -1,12 +1,11 @@
 package com.example.scoresaver.presentation.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -14,22 +13,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.*
 import com.example.scoresaver.R
-import com.example.scoresaver.presentation.MenuViewModel
 import com.example.scoresaver.presentation.theme.Orange
 import com.example.scoresaver.presentation.theme.UncheckedThumb
 import com.example.scoresaver.presentation.theme.UncheckedTrackColor
+import com.example.scoresaver.presentation.util.SETTINGS_TYPE
+import com.example.scoresaver.presentation.util.VIEW_TYPE_ORDER_SERVICE
+import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
 
 @Composable
-fun OrderServiceScreen(
-    menuViewModel: MenuViewModel = viewModel()
-) {
+fun OrderServiceScreen() {
 
-    val switchValue by menuViewModel.switchOrderService.collectAsState()
+    var switchValue by remember {
+        mutableStateOf(false)
+    }
     val listState = rememberScalingLazyListState()
 
+    val context = LocalContext.current
+    val orderService = WidgetSharedPrefsUtil.loadViewOrderService(
+        context,
+        settingsType = SETTINGS_TYPE.ORDER_SERVICE.value
+    )
+
+    WidgetSharedPrefsUtil.saveFirstViewOrderService(
+        context,
+        settingsType = SETTINGS_TYPE.FIRST_VIEW_ORDER_SERVICE.value,
+        VIEW_TYPE_ORDER_SERVICE.VIEW.value
+    )
+    switchValue = orderService
 
     Scaffold(
         vignette = {
@@ -79,7 +91,12 @@ fun OrderServiceScreen(
                         )
                     },
                     onCheckedChange = {
-                        menuViewModel.setSwitchValue(it)
+                        switchValue = !switchValue
+                        WidgetSharedPrefsUtil.savePreferencesInfoOrderService(
+                            context,
+                            SETTINGS_TYPE.ORDER_SERVICE.value,
+                            it
+                        )
                     },
                     label = {
                         Text(

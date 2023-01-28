@@ -1,9 +1,5 @@
 <resources>
     <string name="app_name">ScoreSaver</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
     <string name="new_game">Nuova partita</string>
     <string name="history_game">Storico</string>
     <string name="type_game">Tipo di gioco</string>
@@ -13,4 +9,8 @@
     <string name="title">Scoresaver</string>
     <string name="team_1">Team 1</string>
     <string name="team_2">Team 2</string>
+    <string name="single_game">Singolo</string>
+    <string name="double_game">Doppio</string>
+    <string name="killer_text">Killer Point</string>
+    <string name="description_killer_point">Puoi attivare o disattivare il killer point durante la partita premendo sull\'icona con il teschio</string>
 </resources>
