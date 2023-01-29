@@ -54,7 +54,7 @@ fun SplashScreen(
     )
     WidgetSharedPrefsUtil.deletePref(
         LocalContext.current,
-        settingsType = SETTINGS_TYPE.ORDER_SERVICE.value
+        settingsType = SETTINGS_TYPE.FIRST_VIEW_ORDER_SERVICE.value
     )
     WidgetSharedPrefsUtil.deletePref(
         LocalContext.current,

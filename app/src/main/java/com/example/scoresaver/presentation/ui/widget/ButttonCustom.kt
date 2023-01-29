@@ -28,7 +28,6 @@ fun ButtonCustom(
     onClickButton: (() -> Unit?)? = null,
     positionText: TextAlign = TextAlign.Left,
     textColor: Color = Color.White,
-    roundedShape: Int? = null,
     iconChecked: ImageVector? = null
 ) {
     OutlinedButton(
@@ -41,7 +40,7 @@ fun ButtonCustom(
             .fillMaxWidth()
             .height(33.dp)
             .padding(horizontal = 10.dp),
-        shape = if(roundedShape == null) RoundedCornerShape(15.dp) else RoundedCornerShape(roundedShape.dp),
+        shape = RoundedCornerShape(15.dp),
         border = ButtonDefaults.outlinedButtonBorder(borderColor = borderColor)
     ) {
         Box(

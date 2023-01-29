@@ -105,21 +105,6 @@ fun MenuScreen(
                     )
                 )
             }
-            if (loadTypeGame != "single") {
-                item {
-                    ButtonCustom(
-                        iconModifier = iconModifier,
-                        text = stringResource(id = R.string.order_service),
-                        backgroundColor = BackgroundGrey,
-                        borderColor = BackgroundGrey,
-                        imageVector = ImageVector.vectorResource(id = R.drawable.icon_next),
-                        onClickButton = {
-                            navController.navigate(Screen.OrderService.route)
-                        },
-                        iconChecked = if (seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value) ImageVector.vectorResource(id = R.drawable.ic_check) else null
-                    )
-                }
-            }
 
             item {
                 ButtonCustom(
@@ -141,11 +126,27 @@ fun MenuScreen(
                 )
             }
 
+            if (loadTypeGame == "double") {
+                item {
+                    ButtonCustom(
+                        iconModifier = iconModifier,
+                        text = stringResource(id = R.string.order_service),
+                        backgroundColor = BackgroundGrey,
+                        borderColor = BackgroundGrey,
+                        imageVector = ImageVector.vectorResource(id = R.drawable.icon_next),
+                        onClickButton = {
+                            navController.navigate(Screen.OrderService.route)
+                        },
+                        iconChecked = if (seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value) ImageVector.vectorResource(id = R.drawable.ic_check) else null
+                    )
+                }
+            }
+
             item {
                 ButtonCustom(
                     iconModifier = iconModifier,
                     text = stringResource(
-                        id = R.string.next
+                        id = R.string.start_game
                     ),
                     backgroundColor = if (enabledButton) Orange else ButtonDisabled,
                     borderColor = if (enabledButton) Orange else ButtonDisabled,
