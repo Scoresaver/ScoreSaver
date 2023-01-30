@@ -60,6 +60,10 @@ fun SplashScreen(
         LocalContext.current,
         settingsType = SETTINGS_TYPE.ORDER_SERVICE.value
     )
+    WidgetSharedPrefsUtil.deletePref(
+        LocalContext.current,
+        settingsType = SETTINGS_TYPE.ORDER_SERVICE_LIST.value
+    )
     Splash(alpha = alphaAnimation.value)
 }
 

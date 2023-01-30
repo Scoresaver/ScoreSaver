@@ -3,6 +3,9 @@ package com.example.scoresaver.presentation.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 
 object WidgetSharedPrefsUtil {
     private const val PREFS_NAME = "scoresaver"
@@ -13,7 +16,7 @@ object WidgetSharedPrefsUtil {
         value: String
 
     ) {
-        context.getSharedPreferences(name = PREFS_NAME,Context.MODE_PRIVATE).edit()
+        context.getSharedPreferences(name = PREFS_NAME, Context.MODE_PRIVATE).edit()
             .putString(PREFS_NAME + settingsType, value)
             .apply()
     }
@@ -24,7 +27,7 @@ object WidgetSharedPrefsUtil {
         value: Boolean
 
     ) {
-        context.getSharedPreferences(name = PREFS_NAME,Context.MODE_PRIVATE).edit()
+        context.getSharedPreferences(name = PREFS_NAME, Context.MODE_PRIVATE).edit()
             .putBoolean(PREFS_NAME + settingsType, value)
             .apply()
     }
@@ -34,9 +37,36 @@ object WidgetSharedPrefsUtil {
         settingsType: String,
         value: String
     ) {
-        context.getSharedPreferences(name = PREFS_NAME,Context.MODE_PRIVATE).edit()
+        context.getSharedPreferences(name = PREFS_NAME, Context.MODE_PRIVATE).edit()
             .putString(PREFS_NAME + settingsType, value)
             .apply()
+    }
+
+    internal fun saveOrderServiceList(
+        context: Context,
+        settingsType: String,
+        list: MutableList<Int>
+    ) {
+        val gson = Gson()
+        val stringJson = gson.toJson(list)
+        context.getSharedPreferences(name = PREFS_NAME, Context.MODE_PRIVATE).edit()
+            .putString(PREFS_NAME + settingsType, stringJson)
+            .apply()
+    }
+
+    internal fun loadOrderServiceList(context: Context, settingsType: String): MutableList<Int> {
+        val gson = Gson()
+        val productFromShared: MutableList<Int>
+        val sharedPref = context.getSharedPreferences(name = PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(PREFS_NAME + settingsType, null)
+        val type = object : TypeToken<List<Int>>() {}.type
+
+        return if(!sharedPref.isNullOrEmpty()){
+            productFromShared = gson.fromJson(sharedPref, type)
+            productFromShared
+        } else {
+            mutableListOf(1,3,2,4)
+        }
     }
 
     internal fun loadPreferences(context: Context, settingsType: String): String? {
@@ -69,10 +99,11 @@ enum class SETTINGS_TYPE(val value: String) {
     TYPE_GAME("type_game"),
     ORDER_SERVICE("order_service"),
     FIRST_VIEW_ORDER_SERVICE("first_view_order_service"),
-    TYPE_ADVANTAGES("type_advantages")
+    TYPE_ADVANTAGES("type_advantages"),
+    ORDER_SERVICE_LIST("order_service_list")
 }
 
-enum class VIEW_TYPE_ORDER_SERVICE(val value: String){
+enum class VIEW_TYPE_ORDER_SERVICE(val value: String) {
     VIEW("view"),
     NOT_VIEW("not_view")
 }
