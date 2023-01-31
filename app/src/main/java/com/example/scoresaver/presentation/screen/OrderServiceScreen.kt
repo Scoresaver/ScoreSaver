@@ -120,6 +120,12 @@ fun OrderServiceScreen() {
                             SETTINGS_TYPE.ORDER_SERVICE.value,
                             it
                         )
+                        if(!it) {
+                            WidgetSharedPrefsUtil.deletePref(
+                                context,
+                                settingsType = SETTINGS_TYPE.ORDER_SERVICE_LIST.value
+                            )
+                        }
                     },
                     label = {
                         Text(
