@@ -2,8 +2,6 @@ package com.example.scoresaver.presentation.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -13,7 +11,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.wear.compose.material.*
 import com.example.scoresaver.R
@@ -22,6 +19,7 @@ import com.example.scoresaver.presentation.theme.BackgroundGrey
 import com.example.scoresaver.presentation.theme.ButtonDisabled
 import com.example.scoresaver.presentation.theme.Orange
 import com.example.scoresaver.presentation.ui.widget.ButtonCustom
+import com.example.scoresaver.presentation.util.Constants
 import com.example.scoresaver.presentation.util.SETTINGS_TYPE
 import com.example.scoresaver.presentation.util.VIEW_TYPE_ORDER_SERVICE
 import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
@@ -39,7 +37,7 @@ fun MenuScreen(
         settingsType = SETTINGS_TYPE.TYPE_GAME.value
     )
 
-    val adantagesType = WidgetSharedPrefsUtil.loadPreferences(
+    val advantagesType = WidgetSharedPrefsUtil.loadPreferences(
         context,
         settingsType = SETTINGS_TYPE.TYPE_ADVANTAGES.value
     )
@@ -49,10 +47,10 @@ fun MenuScreen(
         settingsType = SETTINGS_TYPE.FIRST_VIEW_ORDER_SERVICE.value
     )
 
-    val enabledButton = if (loadTypeGame == "single") {
-        loadTypeGame.isNotEmpty() && !adantagesType.isNullOrEmpty()
+    val enabledButton = if (loadTypeGame == Constants.SINGLE) {
+        loadTypeGame.isNotEmpty() && !advantagesType.isNullOrEmpty()
     } else {
-        !loadTypeGame.isNullOrEmpty() && !adantagesType.isNullOrEmpty() && seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value
+        !loadTypeGame.isNullOrEmpty() && !advantagesType.isNullOrEmpty() && seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value
     }
 
     val iconModifier = Modifier
@@ -90,8 +88,8 @@ fun MenuScreen(
                 ButtonCustom(
                     iconModifier = iconModifier,
                     text = when (loadTypeGame) {
-                        "single" -> stringResource(id = R.string.single_game)
-                        "double" -> stringResource(id = R.string.double_game)
+                        Constants.SINGLE -> stringResource(id = R.string.single_game)
+                        Constants.DOUBLE -> stringResource(id = R.string.double_game)
                         else -> stringResource(id = R.string.type_game)
                     },
                     backgroundColor = BackgroundGrey,
@@ -109,9 +107,9 @@ fun MenuScreen(
             item {
                 ButtonCustom(
                     iconModifier = iconModifier,
-                    text = when (adantagesType) {
-                        "classic" -> stringResource(id = R.string.advantages)
-                        "killer" -> stringResource(id = R.string.killer_text)
+                    text = when (advantagesType) {
+                        Constants.CLASSIC -> stringResource(id = R.string.advantages)
+                        Constants.KILLER -> stringResource(id = R.string.killer_text)
                         else -> stringResource(id = R.string.advantages)
                     },
                     backgroundColor = BackgroundGrey,
@@ -120,13 +118,13 @@ fun MenuScreen(
                     onClickButton = {
                         navController.navigate(Screen.Advantages.route)
                     },
-                    iconChecked = if (adantagesType.isNullOrEmpty()) null else ImageVector.vectorResource(
+                    iconChecked = if (advantagesType.isNullOrEmpty()) null else ImageVector.vectorResource(
                         id = R.drawable.ic_check
                     )
                 )
             }
 
-            if (loadTypeGame == "double") {
+            if (loadTypeGame == Constants.DOUBLE) {
                 item {
                     ButtonCustom(
                         iconModifier = iconModifier,
@@ -137,7 +135,9 @@ fun MenuScreen(
                         onClickButton = {
                             navController.navigate(Screen.OrderService.route)
                         },
-                        iconChecked = if (seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value) ImageVector.vectorResource(id = R.drawable.ic_check) else null
+                        iconChecked = if (seeOrderService == VIEW_TYPE_ORDER_SERVICE.VIEW.value) ImageVector.vectorResource(
+                            id = R.drawable.ic_check
+                        ) else null
                     )
                 }
             }

@@ -18,6 +18,7 @@ import com.example.scoresaver.R
 import com.example.scoresaver.presentation.theme.BackgroundGrey
 import com.example.scoresaver.presentation.theme.Orange
 import com.example.scoresaver.presentation.ui.widget.ButtonCustom
+import com.example.scoresaver.presentation.util.Constants
 import com.example.scoresaver.presentation.util.SETTINGS_TYPE
 import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
 
@@ -46,11 +47,11 @@ fun TypeGameScreen() {
     val listState = rememberScalingLazyListState()
 
     when (loadTypeGame) {
-        "single" -> {
+        Constants.SINGLE -> {
             stateSingleGame = true
             stateDoubleGame = false
         }
-        "double" -> {
+        Constants.DOUBLE -> {
             stateSingleGame = false
             stateDoubleGame = true
         }
@@ -105,7 +106,7 @@ fun TypeGameScreen() {
                         WidgetSharedPrefsUtil.savePreferencesInfo(
                             context,
                             settingsType = SETTINGS_TYPE.TYPE_GAME.value,
-                            "single"
+                            Constants.SINGLE
                         )
                         null
                     },
@@ -125,7 +126,7 @@ fun TypeGameScreen() {
                         WidgetSharedPrefsUtil.savePreferencesInfo(
                             context,
                             settingsType = SETTINGS_TYPE.TYPE_GAME.value,
-                            "double"
+                            Constants.DOUBLE
                         )
                         null
                     },

@@ -3,7 +3,6 @@ package com.example.scoresaver.presentation.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,6 +18,7 @@ import com.example.scoresaver.R
 import com.example.scoresaver.presentation.theme.BackgroundGrey
 import com.example.scoresaver.presentation.theme.Orange
 import com.example.scoresaver.presentation.ui.widget.ButtonCustom
+import com.example.scoresaver.presentation.util.Constants
 import com.example.scoresaver.presentation.util.SETTINGS_TYPE
 import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
 
@@ -30,7 +30,7 @@ fun AdvantagesScreen() {
         .padding(end = 10.dp)
         .size(12.dp)
 
-    val adavtangesType = WidgetSharedPrefsUtil.loadPreferences(
+    val advantagesType = WidgetSharedPrefsUtil.loadPreferences(
         context,
         settingsType = SETTINGS_TYPE.TYPE_ADVANTAGES.value
     )
@@ -44,12 +44,12 @@ fun AdvantagesScreen() {
     }
     val listState = rememberScalingLazyListState()
 
-    when (adavtangesType) {
-        "classic" -> {
+    when (advantagesType) {
+        Constants.CLASSIC -> {
             stateAvClassic = true
             stateAvKiller = false
         }
-        "killer" -> {
+        Constants.KILLER -> {
             stateAvClassic = false
             stateAvKiller = true
         }
