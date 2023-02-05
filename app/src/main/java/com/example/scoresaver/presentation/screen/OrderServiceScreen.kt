@@ -23,6 +23,7 @@ import com.example.scoresaver.presentation.theme.UncheckedTrackColor
 import com.example.scoresaver.presentation.util.SETTINGS_TYPE
 import com.example.scoresaver.presentation.util.VIEW_TYPE_ORDER_SERVICE
 import com.example.scoresaver.presentation.util.WidgetSharedPrefsUtil
+import com.example.scoresaver.presentation.util.getImageFromVector
 
 @Composable
 fun OrderServiceScreen() {
@@ -120,7 +121,7 @@ fun OrderServiceScreen() {
                             SETTINGS_TYPE.ORDER_SERVICE.value,
                             it
                         )
-                        if(!it) {
+                        if (!it) {
                             WidgetSharedPrefsUtil.deletePref(
                                 context,
                                 settingsType = SETTINGS_TYPE.ORDER_SERVICE_LIST.value
@@ -178,26 +179,14 @@ fun OrderServiceScreen() {
                             modifier = Modifier
                                 .padding(start = 5.dp)
                                 .size(15.dp),
-                            imageVector = when (a1) {
-                                1 -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                                2 -> ImageVector.vectorResource(id = R.drawable.ic_2)
-                                3 -> ImageVector.vectorResource(id = R.drawable.ic_3)
-                                4 -> ImageVector.vectorResource(id = R.drawable.ic_4)
-                                else -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                            },
+                            imageVector = getImageFromVector(value = a1),
                             contentDescription = null
                         )
                         Icon(
                             modifier = Modifier
                                 .padding(start = 45.dp)
                                 .size(15.dp),
-                            imageVector = when (b1) {
-                                1 -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                                2 -> ImageVector.vectorResource(id = R.drawable.ic_2)
-                                3 -> ImageVector.vectorResource(id = R.drawable.ic_3)
-                                4 -> ImageVector.vectorResource(id = R.drawable.ic_4)
-                                else -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                            },
+                            imageVector = getImageFromVector(value = b1),
                             contentDescription = null
                         )
                         Icon(
@@ -290,26 +279,14 @@ fun OrderServiceScreen() {
                             modifier = Modifier
                                 .padding(start = 5.dp)
                                 .size(15.dp),
-                            imageVector = when (a2) {
-                                1 -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                                2 -> ImageVector.vectorResource(id = R.drawable.ic_2)
-                                3 -> ImageVector.vectorResource(id = R.drawable.ic_3)
-                                4 -> ImageVector.vectorResource(id = R.drawable.ic_4)
-                                else -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                            },
+                            imageVector = getImageFromVector(value = a2),
                             contentDescription = null
                         )
                         Icon(
                             modifier = Modifier
                                 .padding(start = 45.dp)
                                 .size(15.dp),
-                            imageVector = when (b2) {
-                                1 -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                                2 -> ImageVector.vectorResource(id = R.drawable.ic_2)
-                                3 -> ImageVector.vectorResource(id = R.drawable.ic_3)
-                                4 -> ImageVector.vectorResource(id = R.drawable.ic_4)
-                                else -> ImageVector.vectorResource(id = R.drawable.ic_1)
-                            },
+                            imageVector = getImageFromVector(value = b2),
                             contentDescription = null
                         )
                         Icon(
