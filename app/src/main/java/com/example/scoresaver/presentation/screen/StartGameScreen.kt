@@ -1,8 +1,18 @@
 package com.example.scoresaver.presentation.screen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,7 +23,17 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.ButtonDefaults
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.OutlinedButton
+import androidx.wear.compose.material.PositionIndicator
+import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.Vignette
+import androidx.wear.compose.material.VignettePosition
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.example.scoresaver.R
 import com.example.scoresaver.presentation.theme.ButtonDisabled
 import com.example.scoresaver.presentation.theme.GreenLight
@@ -33,7 +53,7 @@ fun StartGameScreen() {
         settingsType = SETTINGS_TYPE.ORDER_SERVICE_LIST.value
     )
 
-    val advantagesType = WidgetSharedPrefsUtil.loadPreferences(
+    var advantagesType = WidgetSharedPrefsUtil.loadPreferences(
         context,
         settingsType = SETTINGS_TYPE.TYPE_ADVANTAGES.value
     )
@@ -44,12 +64,29 @@ fun StartGameScreen() {
         settingsType = SETTINGS_TYPE.TYPE_GAME.value
     )
 
-    /* Column(Modifier.fillMaxSize(),
-         horizontalAlignment = Alignment.CenterHorizontally,
-         verticalArrangement = Arrangement.Center
-     ) {
-         Text(text = listService.toString())
-     } */
+    var isKiller by remember {
+        mutableStateOf(false)
+    }
+
+    if (advantagesType == Constants.KILLER)
+        isKiller = true
+
+
+    var pointsA by remember {
+        mutableStateOf("0")
+    }
+
+    var pointsB by remember {
+        mutableStateOf("0")
+    }
+
+    var gameA by remember {
+        mutableStateOf(0)
+    }
+
+    var gameB by remember {
+        mutableStateOf(0)
+    }
 
     Scaffold(
         vignette = {
@@ -106,23 +143,23 @@ fun StartGameScreen() {
                         }
                     }
 
-                        Button(
-                            modifier = Modifier.size(30.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor =  if(advantagesType == Constants.KILLER) Orange else ButtonDisabled
-                            ),
-                            onClick = {
-                            },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(15.dp)
-                                    .clickable {},
-                                imageVector = ImageVector.vectorResource(id = R.drawable.ic_killer_icon),
-                                contentDescription = null,
-                                tint = Color.Black
-                            )
-                        }
+                    Button(
+                        modifier = Modifier.size(30.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = if (isKiller) Orange else ButtonDisabled
+                        ),
+                        onClick = {
+                            isKiller = !isKiller
+                        },
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(15.dp),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_killer_icon),
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+                    }
 
 
                 }
@@ -132,7 +169,9 @@ fun StartGameScreen() {
             }
             item {
                 Icon(
-                    modifier = Modifier.padding(horizontal = 10.dp).fillMaxSize(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxSize(),
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_stroke_white),
                     contentDescription = null,
                     tint = Color.White
@@ -148,7 +187,7 @@ fun StartGameScreen() {
                         modifier = Modifier
                             .padding(start = 15.dp)
                             .size(20.dp),
-                        text = "40",
+                        text = pointsA,
                         color = Color.White,
                         fontSize = 15.sp
                     )
@@ -166,7 +205,7 @@ fun StartGameScreen() {
                         modifier = Modifier
                             .padding(end = 14.dp)
                             .size(20.dp),
-                        text = "40",
+                        text = pointsB,
                         color = Color.White,
                         fontSize = 15.sp
                     )
@@ -179,17 +218,19 @@ fun StartGameScreen() {
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Text(
-                        modifier = Modifier.padding(start = 4.dp).
-                        size(13.dp),
-                        text = "6",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .size(13.dp),
+                        text = gameA.toString(),
                         color = Color.White,
                         fontSize = 8.sp
                     )
 
                     Text(
-                        modifier = Modifier.padding(start = 6.dp).
-                        size(13.dp),
-                        text = "4",
+                        modifier = Modifier
+                            .padding(start = 6.dp)
+                            .size(13.dp),
+                        text = gameB.toString(),
                         color = Color.White,
                         fontSize = 8.sp
                     )
@@ -197,7 +238,9 @@ fun StartGameScreen() {
             }
             item {
                 Icon(
-                    modifier = Modifier.padding(horizontal = 10.dp).fillMaxSize(),
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .fillMaxSize(),
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_stroke_white),
                     contentDescription = null,
                     tint = Color.White
@@ -214,7 +257,51 @@ fun StartGameScreen() {
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Orange
                         ),
-                        onClick = { /* ... */ },
+                        onClick = {
+                            when (pointsA) {
+                                "0" -> {
+                                    pointsA = "15"
+                                }
+
+                                "15" -> {
+                                    pointsA = "30"
+                                }
+
+                                "30" -> {
+                                    pointsA = "40"
+                                }
+
+                                "40" -> {
+                                    when (pointsB) {
+                                        "40" -> {
+                                            if (isKiller) {
+                                                pointsA = "0"
+                                                pointsB = "0"
+                                                gameA++
+                                            } else {
+                                                pointsA = "A"
+                                            }
+                                        }
+
+                                        "A" -> {
+                                            pointsB = "40"
+                                        }
+
+                                        else -> {
+                                            pointsA = "0"
+                                            pointsB = "0"
+                                            gameA++
+                                        }
+                                    }
+                                }
+
+                                "A" -> {
+                                    pointsA = "0"
+                                    pointsB = "0"
+                                    gameA++
+                                }
+                            }
+                        },
                     ) {
                         Text(
                             modifier = Modifier
@@ -232,7 +319,51 @@ fun StartGameScreen() {
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = GreenLight
                         ),
-                        onClick = { /* ... */ },
+                        onClick = {
+                            when (pointsB) {
+                                "0" -> {
+                                    pointsB = "15"
+                                }
+
+                                "15" -> {
+                                    pointsB = "30"
+                                }
+
+                                "30" -> {
+                                    pointsB = "40"
+                                }
+
+                                "40" -> {
+                                    when (pointsA) {
+                                        "40" -> {
+                                            if (isKiller) {
+                                                pointsA = "0"
+                                                pointsB = "0"
+                                                gameB++
+                                            } else {
+                                                pointsB = "A"
+                                            }
+                                        }
+
+                                        "A" -> {
+                                            pointsA = "40"
+                                        }
+
+                                        else -> {
+                                            pointsA = "0"
+                                            pointsB = "0"
+                                            gameB++
+                                        }
+                                    }
+                                }
+
+                                "A" -> {
+                                    pointsA = "0"
+                                    pointsB = "0"
+                                    gameB++
+                                }
+                            }
+                        },
                     ) {
                         Text(
                             modifier = Modifier
