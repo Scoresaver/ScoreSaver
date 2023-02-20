@@ -88,6 +88,18 @@ fun StartGameScreen() {
         mutableStateOf(0)
     }
 
+    var setA by remember {
+        mutableStateOf(0)
+    }
+
+    var setB by remember {
+        mutableStateOf(0)
+    }
+
+    var isTieBreak = false
+    var firstPointA = false
+    var firstPointB = false
+
     Scaffold(
         vignette = {
             Vignette(vignettePosition = VignettePosition.TopAndBottom)
@@ -217,20 +229,22 @@ fun StartGameScreen() {
                     Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
+                    val recapA = "$setA-$gameA"
                     Text(
                         modifier = Modifier
                             .padding(start = 4.dp)
-                            .size(13.dp),
-                        text = gameA.toString(),
+                            .size(12.dp),
+                        text = recapA,
                         color = Color.White,
                         fontSize = 8.sp
                     )
 
+                    val recapB = "$setB-$gameB"
                     Text(
                         modifier = Modifier
                             .padding(start = 6.dp)
-                            .size(13.dp),
-                        text = gameB.toString(),
+                            .size(12.dp),
+                        text = "$recapB",
                         color = Color.White,
                         fontSize = 8.sp
                     )
@@ -258,49 +272,192 @@ fun StartGameScreen() {
                             backgroundColor = Orange
                         ),
                         onClick = {
-                            when (pointsA) {
-                                "0" -> {
-                                    pointsA = "15"
-                                }
+                            if (gameA == 6 && gameB == 6) {
+                                isTieBreak = true
+                            } else {
+                                when (pointsA) {
+                                    "0" -> {
+                                        pointsA = "15"
+                                    }
 
-                                "15" -> {
-                                    pointsA = "30"
-                                }
+                                    "15" -> {
+                                        pointsA = "30"
+                                    }
 
-                                "30" -> {
-                                    pointsA = "40"
-                                }
+                                    "30" -> {
+                                        pointsA = "40"
+                                    }
 
-                                "40" -> {
-                                    when (pointsB) {
-                                        "40" -> {
-                                            if (isKiller) {
+                                    "40" -> {
+                                        when (pointsB) {
+                                            "40" -> {
+                                                if (isKiller) {
+                                                    pointsA = "0"
+                                                    pointsB = "0"
+                                                    when (gameA) {
+                                                        0, 1, 2, 3, 4 -> {
+                                                            gameA++
+                                                        }
+
+                                                        5 -> {
+                                                            when (gameB) {
+                                                                5, 6 -> {
+                                                                    gameA++
+                                                                }
+
+                                                                else -> {
+                                                                    gameA = 0
+                                                                    gameB = 0
+                                                                    setA++
+                                                                }
+                                                            }
+                                                        }
+
+                                                        6 -> {
+                                                            when (gameB) {
+                                                                5 -> {
+                                                                    gameA = 0
+                                                                    gameB = 0
+                                                                    setA++
+                                                                }
+
+                                                                6 -> {
+                                                                    isTieBreak = true
+                                                                    firstPointA = true
+                                                                    firstPointB = false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    pointsA = "A"
+                                                }
+                                            }
+
+                                            "A" -> {
+                                                pointsB = "40"
+                                            }
+
+                                            else -> {
                                                 pointsA = "0"
                                                 pointsB = "0"
-                                                gameA++
-                                            } else {
-                                                pointsA = "A"
+                                                when (gameA) {
+                                                    0, 1, 2, 3, 4 -> {
+                                                        gameA++
+                                                    }
+
+                                                    5 -> {
+                                                        when (gameB) {
+                                                            5, 6 -> {
+                                                                gameA++
+                                                            }
+
+                                                            else -> {
+                                                                gameA = 0
+                                                                gameB = 0
+                                                                setA++
+                                                            }
+                                                        }
+                                                    }
+
+                                                    6 -> {
+                                                        when (gameB) {
+                                                            5 -> {
+                                                                gameA = 0
+                                                                gameB = 0
+                                                                setA++
+                                                            }
+
+                                                            6 -> {
+                                                                isTieBreak = true
+                                                                firstPointA = true
+                                                                firstPointB = false
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
+                                    }
 
-                                        "A" -> {
-                                            pointsB = "40"
-                                        }
+                                    "A" -> {
+                                        pointsA = "0"
+                                        pointsB = "0"
+                                        when (gameA) {
+                                            0, 1, 2, 3, 4 -> {
+                                                gameA++
+                                            }
 
-                                        else -> {
-                                            pointsA = "0"
-                                            pointsB = "0"
-                                            gameA++
+                                            5 -> {
+                                                when (gameB) {
+                                                    5, 6 -> {
+                                                        gameA++
+                                                    }
+
+                                                    else -> {
+                                                        gameA = 0
+                                                        gameB = 0
+                                                        setA++
+                                                    }
+                                                }
+                                            }
+
+                                            6 -> {
+                                                when (gameB) {
+                                                    5 -> {
+                                                        gameA = 0
+                                                        gameB = 0
+                                                        setA++
+                                                    }
+
+                                                    6 -> {
+                                                        isTieBreak = true
+                                                        firstPointA = true
+                                                        firstPointB = false
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
 
-                                "A" -> {
-                                    pointsA = "0"
-                                    pointsB = "0"
-                                    gameA++
+                            }
+                            if (isTieBreak) {
+                                pointsA = when (pointsA) {
+                                    "0" -> {
+                                        if (firstPointA) {
+                                            firstPointA = false
+                                            "0"
+                                        } else {
+                                            "1"
+                                        }
+                                    }
+
+                                    "1" -> "2"
+                                    "2" -> "3"
+                                    "3" -> "4"
+                                    "4" -> "5"
+                                    "5" -> "6"
+                                    "6" -> {
+                                        gameA = 0
+                                        gameB = 0
+                                        setA++
+                                        isTieBreak = false
+                                        pointsB = "0"
+                                        "0"
+                                    }
+
+                                    else -> {
+                                        gameA = 0
+                                        gameB = 0
+                                        isTieBreak = false
+                                        pointsB = "0"
+                                        "0"
+                                    }
+
                                 }
                             }
+
                         },
                     ) {
                         Text(
@@ -320,47 +477,188 @@ fun StartGameScreen() {
                             backgroundColor = GreenLight
                         ),
                         onClick = {
-                            when (pointsB) {
-                                "0" -> {
-                                    pointsB = "15"
-                                }
+                            if (gameA == 6 && gameB == 6) {
+                                isTieBreak = true
+                            } else {
+                                when (pointsB) {
+                                    "0" -> {
+                                        pointsB = "15"
+                                    }
 
-                                "15" -> {
-                                    pointsB = "30"
-                                }
+                                    "15" -> {
+                                        pointsB = "30"
+                                    }
 
-                                "30" -> {
-                                    pointsB = "40"
-                                }
+                                    "30" -> {
+                                        pointsB = "40"
+                                    }
 
-                                "40" -> {
-                                    when (pointsA) {
-                                        "40" -> {
-                                            if (isKiller) {
+                                    "40" -> {
+                                        when (pointsA) {
+                                            "40" -> {
+                                                if (isKiller) {
+                                                    pointsA = "0"
+                                                    pointsB = "0"
+                                                    when (gameB) {
+                                                        0, 1, 2, 3, 4 -> {
+                                                            gameB++
+                                                        }
+
+                                                        5 -> {
+                                                            when (gameA) {
+                                                                5, 6 -> {
+                                                                    gameB++
+                                                                }
+
+                                                                else -> {
+                                                                    gameA = 0
+                                                                    gameB = 0
+                                                                    setB++
+                                                                }
+                                                            }
+                                                        }
+
+                                                        6 -> {
+                                                            when (gameA) {
+                                                                5 -> {
+                                                                    gameA = 0
+                                                                    gameB = 0
+                                                                    setB++
+                                                                }
+
+                                                                6 -> {
+                                                                    isTieBreak = true
+                                                                    firstPointA = false
+                                                                    firstPointB = true
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    pointsB = "A"
+                                                }
+                                            }
+
+                                            "A" -> {
+                                                pointsA = "40"
+                                            }
+
+                                            else -> {
                                                 pointsA = "0"
                                                 pointsB = "0"
-                                                gameB++
-                                            } else {
-                                                pointsB = "A"
+                                                when (gameB) {
+                                                    0, 1, 2, 3, 4 -> {
+                                                        gameB++
+                                                    }
+
+                                                    5 -> {
+                                                        when (gameA) {
+                                                            5, 6 -> {
+                                                                gameB++
+                                                            }
+
+                                                            else -> {
+                                                                gameA = 0
+                                                                gameB = 0
+                                                                setB++
+                                                            }
+                                                        }
+                                                    }
+
+                                                    6 -> {
+                                                        when (gameA) {
+                                                            5 -> {
+                                                                gameA = 0
+                                                                gameB = 0
+                                                                setB++
+                                                            }
+
+                                                            6 -> {
+                                                                isTieBreak = true
+                                                                firstPointA = false
+                                                                firstPointB = true
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
+                                    }
 
-                                        "A" -> {
-                                            pointsA = "40"
-                                        }
+                                    "A" -> {
+                                        pointsA = "0"
+                                        pointsB = "0"
+                                        when (gameB) {
+                                            0, 1, 2, 3, 4 -> {
+                                                gameB++
+                                            }
 
-                                        else -> {
-                                            pointsA = "0"
-                                            pointsB = "0"
-                                            gameB++
+                                            5 -> {
+                                                when (gameA) {
+                                                    5, 6 -> {
+                                                        gameB++
+                                                    }
+
+                                                    else -> {
+                                                        gameA = 0
+                                                        gameB = 0
+                                                        setB++
+                                                    }
+                                                }
+                                            }
+
+                                            6 -> {
+                                                when (gameA) {
+                                                    5 -> {
+                                                        gameA = 0
+                                                        gameB = 0
+                                                        setB++
+                                                    }
+
+                                                    6 -> {
+                                                        isTieBreak = true
+                                                        firstPointA = false
+                                                        firstPointB = true
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
+                            }
+                            if (isTieBreak) {
+                                pointsB = when (pointsB) {
+                                    "0" -> {
+                                        if (firstPointB) {
+                                            firstPointB = firstPointA
+                                            "0"
+                                        } else {
+                                            "1"
+                                        }
+                                    }
 
-                                "A" -> {
-                                    pointsA = "0"
-                                    pointsB = "0"
-                                    gameB++
+                                    "1" -> "2"
+                                    "2" -> "3"
+                                    "3" -> "4"
+                                    "4" -> "5"
+                                    "5" -> "6"
+                                    "6" -> {
+                                        setB++
+                                        gameA = 0
+                                        gameB = 0
+                                        isTieBreak = false
+                                        pointsA = "0"
+                                        "0"
+                                    }
+
+                                    else -> {
+                                        gameA = 0
+                                        gameB = 0
+                                        isTieBreak = false
+                                        pointsA = "0"
+                                        "0"
+                                    }
+
                                 }
                             }
                         },
@@ -403,7 +701,7 @@ fun StartGameScreen() {
                 }
             }
 
-
         }
     }
 }
+
